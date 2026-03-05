@@ -137,11 +137,7 @@ export default function LegalModals({ activeModal, onClose }: LegalModalsProps) 
                                 Diese Website wird bei GitHub Pages gehostet. Weitere Informationen finden Sie in der Datenschutzerklärung von GitHub.
                             </p>
 
-                            <h4 className="font-semibold text-gray-900 mb-2">KI-Bildbearbeitung & Textgenerierung</h4>
-                            <p className="mb-6">
-                                Für die Verarbeitung von Texten und Bildern nutzen wir die Google Gemini API. Bitte beachten Sie, dass Daten zur Verarbeitung an Google-Server übermittelt werden können. Weitere Informationen: <a
-                                    href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-rek-magenta hover:underline">Google Datenschutz</a>.
-                            </p>
+
 
                             <h3 className="text-lg font-bold text-rek-magenta mb-3">5. Ihre Rechte</h3>
                             <p className="mb-2">Sie haben jederzeit das Recht auf:</p>

@@ -1,7 +1,6 @@
 import { useState, useRef } from "react";
 import { motion } from "motion/react";
-import { Send, Image as ImageIcon, Loader2, Wand2, X } from "lucide-react";
-import { editImageWithPrompt } from "../services/gemini";
+import { Send, Image as ImageIcon, X } from "lucide-react";
 
 const KOMMUNEN = [
   "Pulheim",
@@ -19,8 +18,6 @@ export default function Form() {
   // Image Editing State
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageBase64, setImageBase64] = useState<string | null>(null);
-  const [imagePrompt, setImagePrompt] = useState("");
-  const [isEditingImage, setIsEditingImage] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -42,34 +39,9 @@ export default function Form() {
   const handleRemoveImage = () => {
     setImageFile(null);
     setImageBase64(null);
-    setImagePrompt("");
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
-  };
-
-  const handleEditImage = async () => {
-    if (!imageBase64 || !imagePrompt) return;
-    setIsEditingImage(true);
-
-    // Extract base64 data and mime type
-    const match = imageBase64.match(/^data:(image\/[a-zA-Z]*);base64,(.*)$/);
-    if (!match) {
-      setIsEditingImage(false);
-      return;
-    }
-
-    const mimeType = match[1];
-    const base64Data = match[2];
-
-    const result = await editImageWithPrompt(base64Data, mimeType, imagePrompt);
-    if (result) {
-      setImageBase64(result);
-      setImagePrompt(""); // Clear prompt after success
-    } else {
-      alert("Fehler bei der Bildbearbeitung.");
-    }
-    setIsEditingImage(false);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -183,7 +155,7 @@ export default function Form() {
                   Briefanhang (Optional)
                 </h4>
                 <p className="text-sm text-gray-600 mt-1">
-                  Laden Sie ein Foto hoch, um Ihr Anliegen zu verdeutlichen. Sie können das Bild mit unserer KI bearbeiten (z.B. "Gesichter unkenntlich machen").
+                  Laden Sie ein Foto hoch, um Ihr Anliegen zu verdeutlichen.
                 </p>
               </div>
 
@@ -206,45 +178,15 @@ export default function Form() {
                   </button>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="relative bg-white rounded-xl border border-gray-200 overflow-hidden flex items-center justify-center min-h-[200px]">
-                    <img src={imageBase64} alt="Anhang Vorschau" className="w-full h-full object-contain" />
-                    <button
-                      type="button"
-                      onClick={handleRemoveImage}
-                      className="absolute top-2 right-2 p-1.5 bg-white/80 backdrop-blur-sm rounded-full text-gray-700 hover:text-red-600 hover:bg-white shadow-sm transition-all"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
-                  </div>
-
-                  <div className="flex flex-col justify-center space-y-3">
-                    <label className="block text-sm font-medium text-gray-700">
-                      Bild mit KI bearbeiten
-                    </label>
-                    <input
-                      type="text"
-                      value={imagePrompt}
-                      onChange={(e) => setImagePrompt(e.target.value)}
-                      placeholder="z.B. Füge einen roten Kreis um das Schlagloch hinzu"
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-rek-magenta focus:border-transparent transition-all text-sm"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleEditImage}
-                      disabled={isEditingImage || !imagePrompt}
-                      className="w-full flex items-center justify-center px-4 py-3 bg-rek-gelb text-gray-900 rounded-xl font-semibold hover:bg-[#e6d500] transition-all disabled:opacity-50"
-                    >
-                      {isEditingImage ? (
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                      ) : (
-                        <>
-                          <Wand2 className="w-5 h-5 mr-2" />
-                          Bild bearbeiten
-                        </>
-                      )}
-                    </button>
-                  </div>
+                <div className="relative bg-white rounded-xl border border-gray-200 overflow-hidden flex items-center justify-center min-h-[200px]">
+                  <img src={imageBase64} alt="Anhang Vorschau" className="w-full h-full object-contain" />
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="absolute top-2 right-2 p-1.5 bg-white/80 backdrop-blur-sm rounded-full text-gray-700 hover:text-red-600 hover:bg-white shadow-sm transition-all"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
                 </div>
               )}
             </div>
