@@ -1,0 +1,111 @@
+import { GoogleGenAI } from "@google/genai";
+
+const apiKey = process.env.GEMINI_API_KEY;
+
+let _ai: GoogleGenAI | null = null;
+function getAI(): GoogleGenAI {
+  if (!_ai) {
+    if (!apiKey) {
+      console.warn("GEMINI_API_KEY is not set.");
+    }
+    _ai = new GoogleGenAI({ apiKey: apiKey || "" });
+  }
+  return _ai;
+}
+
+export async function draftCitizenLetter(
+  name: string,
+  topic: string,
+  info: string,
+  kommune: string
+): Promise<string> {
+  try {
+    const prompt = `Du bist ein professioneller Assistent für Bürgeranliegen in Pulheim.
+Erstelle einen formellen, höflichen und gut strukturierten Bürgerbrief an den Kommunalpolitiker Stephan Wawrok.
+Der Brief kommt von: ${name || "[Name des Bürgers]"}
+Kommune: ${kommune}
+Thema: ${topic}
+Zusätzliche Infos: ${info}
+
+Nutze die Google Suche, um aktuelle Fakten oder lokale Gegebenheiten in ${kommune} (Pulheim, Rhein-Erft-Kreis) zum Thema "${topic}" einzubeziehen, falls relevant.
+Halte den Brief prägnant und lösungsorientiert.`;
+
+    const response = await getAI().models.generateContent({
+      model: "gemini-3-flash-preview",
+      contents: prompt,
+      config: {
+        tools: [{ googleSearch: {} }],
+      },
+    });
+
+    return response.text || "Es konnte kein Entwurf generiert werden.";
+  } catch (error) {
+    console.error("Error drafting letter:", error);
+    return "Fehler bei der Generierung des Entwurfs.";
+  }
+}
+
+export async function editImageWithPrompt(
+  base64Image: string,
+  mimeType: string,
+  prompt: string
+): Promise<string | null> {
+  try {
+    const response = await getAI().models.generateContent({
+      model: "gemini-2.5-flash-image",
+      contents: {
+        parts: [
+          {
+            inlineData: {
+              data: base64Image,
+              mimeType: mimeType,
+            },
+          },
+          {
+            text: prompt,
+          },
+        ],
+      },
+    });
+
+    for (const part of response.candidates?.[0]?.content?.parts || []) {
+      if (part.inlineData) {
+        return `data:${part.inlineData.mimeType || "image/png"};base64,${part.inlineData.data}`;
+      }
+    }
+    return null;
+  } catch (error) {
+    console.error("Error editing image:", error);
+    return null;
+  }
+}
+
+export async function generateHeroImage(): Promise<string | null> {
+  try {
+    const response = await getAI().models.generateContent({
+      model: "gemini-2.5-flash-image",
+      contents: {
+        parts: [
+          {
+            text: "A wide aerial landscape photography of Pulheim, Germany, featuring the famous Abtei Brauweiler abbey in the center, surrounded by green fields and residential areas, with a church spire visible in the town, under a sunny sky with soft clouds. High quality, realistic, beautiful lighting.",
+          },
+        ],
+      },
+      config: {
+        imageConfig: {
+          aspectRatio: "16:9",
+        },
+      },
+    });
+
+    for (const part of response.candidates?.[0]?.content?.parts || []) {
+      if (part.inlineData) {
+        return `data:${part.inlineData.mimeType || "image/png"};base64,${part.inlineData.data}`;
+      }
+    }
+    return null;
+  } catch (error) {
+    console.error("Error generating hero image:", error);
+    return null;
+  }
+}
