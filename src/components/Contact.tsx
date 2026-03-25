@@ -61,8 +61,8 @@ export default function Contact() {
                 </div>
                 <div className="ml-4">
                   <h4 className="text-lg font-semibold text-gray-900">E-Mail</h4>
-                  <a href="mailto:TODO@fdp-pulheim.de" className="mt-1 text-gray-600 hover:text-rek-magenta transition-colors">
-                    TODO@fdp-pulheim.de
+                  <a href="mailto:stephan.wawrok@fdp-pulheim.de" className="mt-1 text-gray-600 hover:text-rek-magenta transition-colors">
+                    stephan.wawrok@fdp-pulheim.de
                   </a>
                 </div>
               </div>

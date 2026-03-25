@@ -52,21 +52,21 @@ export default function LegalModals({ activeModal, onClose }: LegalModalsProps) 
                             <h3 className="text-lg font-bold text-rek-magenta mt-0 mb-3">Angaben gemäß § 5 TMG</h3>
                             <p className="mb-6">
                                 Stephan Wawrok<br />
-                                TODO-Straße<br />
-                                TODO PLZ Pulheim<br />
+                                Luchsweg 22<br />
+                                50259 Pulheim<br />
                                 Deutschland
                             </p>
 
                             <h3 className="text-lg font-bold text-rek-magenta mb-3">Kontakt</h3>
                             <p className="mb-6">
-                                E-Mail: TODO@fdp-pulheim.de
+                                E-Mail: stephan.wawrok@fdp-pulheim.de
                             </p>
 
                             <h3 className="text-lg font-bold text-rek-magenta mb-3">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
                             <p className="mb-6">
                                 Stephan Wawrok<br />
-                                TODO-Straße<br />
-                                TODO PLZ Pulheim
+                                Luchsweg 22<br />
+                                50259 Pulheim
                             </p>
 
                             <h3 className="text-lg font-bold text-rek-magenta mb-3">Haftungsausschluss</h3>
@@ -103,9 +103,9 @@ export default function LegalModals({ activeModal, onClose }: LegalModalsProps) 
                             <h3 className="text-lg font-bold text-rek-magenta mt-0 mb-3">1. Verantwortlicher</h3>
                             <p className="mb-6">
                                 Stephan Wawrok<br />
-                                TODO-Straße<br />
-                                TODO PLZ Pulheim<br />
-                                E-Mail: TODO@fdp-pulheim.de
+                                Luchsweg 22<br />
+                                50259 Pulheim<br />
+                                E-Mail: stephan.wawrok@fdp-pulheim.de
                             </p>
 
                             <h3 className="text-lg font-bold text-rek-magenta mb-3">2. Erhebung und Verarbeitung personenbezogener Daten</h3>
@@ -154,7 +154,7 @@ export default function LegalModals({ activeModal, onClose }: LegalModalsProps) 
                             <h3 className="text-lg font-bold text-rek-magenta mb-3">6. Kontakt</h3>
                             <p className="mb-6">
                                 Bei Fragen zum Datenschutz wenden Sie sich an:<br />
-                                TODO@fdp-pulheim.de
+                                stephan.wawrok@fdp-pulheim.de
                             </p>
 
                             <p className="text-sm text-gray-500 italic mt-8">Stand: Februar 2026</p>
