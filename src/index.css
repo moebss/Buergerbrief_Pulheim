@@ -5,6 +5,13 @@
   --color-rek-magenta: #e5007d;
 }
 
+/* Premium Footer */
+.footer-premium {
+  background: linear-gradient(180deg, #0f0f14 0%, #111118 100%);
+  color: #9ca3af;
+  text-align: center;
+}
+
 /* Badge rheindorf.digital */
 .badge-rheindorf {
   display: inline-flex;
