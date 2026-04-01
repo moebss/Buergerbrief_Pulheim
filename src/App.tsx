@@ -39,6 +39,17 @@ export default function App() {
               Datenschutz
             </button>
           </div>
+          <div className="mt-8 flex justify-center">
+            <a href="https://rheindorf.digital" target="_blank" rel="noopener noreferrer" className="badge-rheindorf">
+              <span className="badge-rheindorf__inner">
+                <span className="badge-rheindorf__text">
+                  <span className="badge-rheindorf__eyebrow">Made by</span>
+                  <span className="badge-rheindorf__name">rheindorf<span>.digital</span></span>
+                </span>
+              </span>
+              <span className="badge-rheindorf__tip" />
+            </a>
+          </div>
         </div>
       </footer>
 
